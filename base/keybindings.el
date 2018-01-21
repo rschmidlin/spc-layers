@@ -9,3 +9,5 @@
 
 ;; Special stuff
 (global-set-key (kbd "M-1") 'neotree-toggle)
+(when (configuration-layer/package-usedp 'magit)
+  (global-set-key (kbd "C-x g") 'magit-status))
