@@ -33,7 +33,9 @@
   '(boon
     powerline
     boon-keybinding
-    (boon-keybinding :location local))
+    (boon-keybinding :location local)
+    spaceline
+    (spaceline :excluded t))
   "The list of Lisp packages required by the boon layer.
 
 Each entry is either:
@@ -68,12 +70,13 @@ Each entry is either:
     :config
     (boon-mode)))
 
+(defun boon/init-powerline ()
+  (use-package powerline)
+  (require 'boon-powerline)
+  (boon-powerline-theme))
+
 (defun boon/init-boon-keybinding ()
   (require 'boon-keybinding)
   (boon-keybinding-minor-mode t))
-
-(defun boon/post-init-powerline ()
-  (require 'boon-powerline))
-  ;(boon-powerline-theme))
 
 ;;; packages.el ends here
