@@ -17,7 +17,7 @@
 
 ;; Define new commands for command mode
 (define-key boon-command-map (kbd ",") 'ace-window)
-(define-key boon-command-map (kbd "r") 'swiper)
+(define-key boon-command-map (kbd "r") 'helm-swoop)
 (define-key boon-command-map (kbd "m") 'split-window-below)
 (define-key boon-command-map (kbd "M") 'split-window-right)
 (define-key boon-command-map (kbd ".") 'delete-other-windows)
@@ -82,6 +82,7 @@
 (define-minor-mode boon-keybinding-minor-mode
   "A minor mode so that my key settings override annoying major modes."
   :init-value t
-  :lighter boon-keybinding " boon-keybinding")
+  :lighter boon-keybinding " boon-keybinding"
+  :keymap boon-keybinding-minor-mode-map)
 
 (provide 'boon-keybinding)
