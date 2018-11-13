@@ -1,22 +1,12 @@
 (defvar boon-keybinding-minor-mode-map  (make-sparse-keymap))
 
-;; Specializations for system-wide rebind of AltGr to Alt_L
-(define-key boon-keybinding-minor-mode-map (kbd "C-M-q") 'insert-commercial-at)
-(define-key boon-keybinding-minor-mode-map (kbd "C-M-+") 'insert-tilde)
-(define-key boon-keybinding-minor-mode-map (kbd "C-M-7") 'insert-left-curly-brace)
-(define-key boon-keybinding-minor-mode-map (kbd "C-M-8") 'insert-left-squared-bracket)
-(define-key boon-keybinding-minor-mode-map (kbd "C-M-9") 'insert-right-squared-bracket)
-(define-key boon-keybinding-minor-mode-map (kbd "C-M-0") 'insert-right-curly-brace)
-(define-key boon-keybinding-minor-mode-map (kbd "C-M-ß") 'insert-backslash)
-(define-key boon-keybinding-minor-mode-map (kbd "C-M-<") 'insert-pipe)
-
 ;; Make line movement consistent in the minibuffer
 (global-set-key (kbd "M-i") 'previous-line)
 (global-set-key (kbd "M-o") 'next-line)
 (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-i") 'dired-previous-line)))
 (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-o") 'dired-next-line)))
+(add-hook 'helm-mode-hook (lambda () (define-key helm-find-files-map (kbd "M-i") 'helm-previous-line)))
 (add-hook 'helm-mode-hook (lambda () (define-key helm-generic-files-map (kbd "M-i") 'helm-previous-line)))
-(add-hook 'helm-mode-hook (lambda () (define-key helm-generic-files-map (kbd "M-o") 'helm-next-line)))
 (add-hook 'helm-mode-hook (lambda () (define-key helm-map (kbd "M-i") 'helm-previous-line)))
 (add-hook 'helm-mode-hook (lambda () (define-key helm-map (kbd "M-o") 'helm-next-line)))
 
@@ -51,7 +41,7 @@
 ;; New keys on C-x or C-c groups avoiding necessity of pressing control
 (global-set-key (kbd "C-x t") 'vr/query-replace)
 (global-set-key (kbd "C-x ö") 'save-buffer)
-(global-set-key (kbd "C-x j") 'find-file)
+(global-set-key (kbd "C-x j") 'helm-find-files)
 (global-set-key (kbd "C-x p") 'recenter-top-bottom)
 (global-set-key (kbd "C-x c") 'eval-last-sexp)
 (global-set-key (kbd "C-x y") 'comment-dwim)
