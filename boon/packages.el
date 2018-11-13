@@ -31,11 +31,11 @@
 
 (defconst boon-packages
   '(boon
+    spaceline
+    (spaceline :location local)
     powerline
     boon-keybinding
-    (boon-keybinding :location local)
-    spaceline
-    (spaceline :excluded t))
+    (boon-keybinding :location local))
   "The list of Lisp packages required by the boon layer.
 
 Each entry is either:
@@ -71,8 +71,8 @@ Each entry is either:
     (boon-mode)))
 
 (defun boon/init-powerline ()
-  (use-package powerline)
-  (require 'boon-powerline)
+  (add-to-list 'load-path "~/.emacs.d/private/boon/local/spaceline")
+  (require 'boon-spaceline)
   (boon-powerline-theme))
 
 (defun boon/init-boon-keybinding ()
