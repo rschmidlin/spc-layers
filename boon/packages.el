@@ -72,7 +72,7 @@ Each entry is either:
     (boon-mode)))
 
 (defun boon/init-powerline ()
-  (add-to-list 'load-path "~/.emacs.d/private/boon/local/spaceline")
+  (push "~/spc-layers/boon/local/spaceline" load-path)
   (require 'boon-spaceline)
   (boon-powerline-theme))
 

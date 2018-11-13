@@ -15,8 +15,9 @@
 (global-set-key (kbd "M-o") 'next-line)
 (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-i") 'dired-previous-line)))
 (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-o") 'dired-next-line)))
-(add-hook 'helm-mode-hook (lambda () (define-key helm--minor-mode-map (kbd "M-i") 'helm-previous-line)))
-(add-hook 'helm-mode-hook (lambda () (define-key helm--minor-mode-map (kbd "M-o") 'helm-next-point-in-list)))
+(add-hook 'helm-mode-hook (lambda () (define-key helm-generic-files-map (kbd "M-i") 'helm-previous-line)))
+(add-hook 'helm-mode-hook (lambda () (define-key helm-map (kbd "M-i") 'helm-previous-line)))
+(add-hook 'helm-mode-hook (lambda () (define-key helm-map (kbd "M-o") 'helm-next-line)))
 
 ;; Use M-SPC to go back to command mode
 (define-key boon-keybinding-minor-mode-map (kbd "M-SPC") 'boon-set-command-state)
