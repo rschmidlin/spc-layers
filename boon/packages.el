@@ -83,4 +83,7 @@ Each entry is either:
 (defun boon/init-visual-regexp ()
   (require 'visual-regexp))
 
+(defun boon/pre-init-spaceline ()
+  (require 'spaceline-config))
+
 ;;; packages.el ends here

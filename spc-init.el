@@ -37,7 +37,7 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      base
-     win32
+     (when (eq system-type 'windows-nt) win32)
      indexer
      boon
      helm
