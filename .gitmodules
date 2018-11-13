@@ -1,0 +1,3 @@
+[submodule "boon/local/spaceline"]
+	path = boon/local/spaceline
+	url = https://github.com/jyp/spaceline.git
