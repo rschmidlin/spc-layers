@@ -1,5 +1,23 @@
 (defvar boon-keybinding-minor-mode-map  (make-sparse-keymap))
 
+;; Specializations for system-wide rebind of AltGr to Alt_L
+(define-key boon-keybinding-minor-mode-map (kbd "C-M-q") 'insert-commercial-at)
+(define-key boon-keybinding-minor-mode-map (kbd "C-M-+") 'insert-tilde)
+(define-key boon-keybinding-minor-mode-map (kbd "C-M-7") 'insert-left-curly-brace)
+(define-key boon-keybinding-minor-mode-map (kbd "C-M-8") 'insert-left-squared-bracket)
+(define-key boon-keybinding-minor-mode-map (kbd "C-M-9") 'insert-right-squared-bracket)
+(define-key boon-keybinding-minor-mode-map (kbd "C-M-0") 'insert-right-curly-brace)
+(define-key boon-keybinding-minor-mode-map (kbd "C-M-ß") 'insert-backslash)
+(define-key boon-keybinding-minor-mode-map (kbd "C-M-<") 'insert-pipe)
+
+;; Make line movement consistent in the minibuffer
+(global-set-key (kbd "M-i") 'previous-line)
+(global-set-key (kbd "M-o") 'next-line)
+(add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-i") 'dired-previous-line)))
+(add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-o") 'dired-next-line)))
+(add-hook 'helm-mode-hook (lambda () (define-key helm--minor-mode-map (kbd "M-i") 'helm-previous-line)))
+(add-hook 'helm-mode-hook (lambda () (define-key helm--minor-mode-map (kbd "M-o") 'helm-next-point-in-list)))
+
 ;; Use M-SPC to go back to command mode
 (define-key boon-keybinding-minor-mode-map (kbd "M-SPC") 'boon-set-command-state)
 
@@ -9,10 +27,10 @@
 
 ;; Also define commands for C-x that are available from x in Boon
 (global-set-key (kbd "C-x o") 'ace-window)
-(define-key boon-keybinding-minor-mode-map  (kbd "M-x") 'helm-M-x)
+(define-key boon-keybinding-minor-mode-map (kbd "M-x") 'helm-M-x)
 (define-key boon-command-map (kbd "x x") 'helm-M-x)
 (global-set-key (kbd "C-x x") 'helm-M-x)
-(define-key boon-keybinding-minor-mode-map (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x b") 'helm-mini)
 (define-key boon-command-map (kbd "x b") 'helm-mini)
 
 ;; Define new commands for command mode
@@ -22,34 +40,24 @@
 (define-key boon-command-map (kbd "M") 'split-window-right)
 (define-key boon-command-map (kbd ".") 'delete-other-windows)
 (define-key boon-command-map (kbd ":") 'delete-window)
-(define-key boon-command-map (kbd "_") 'undo-tree-redo)
 (define-key boon-command-map (kbd "T") 'query-replace)
+(define-key boon-command-map (kbd "_") 'undo-tree-redo)
+(define-key boon-command-map (kbd "M-_") 'undo-tree-visualize)
+(define-key boon-command-map (kbd "M-f") 'browse-kill-ring)
 (define-key boon-goto-map (kbd "i") 'helm-imenu)
 
 ;; New keys on C-x or C-c groups avoiding necessity of pressing control
-(global-set-key (kbd "C-x t") 'query-replace-regexp)
+(global-set-key (kbd "C-x t") 'vr/query-replace)
 (global-set-key (kbd "C-x ö") 'save-buffer)
 (global-set-key (kbd "C-x j") 'find-file)
 (global-set-key (kbd "C-x p") 'recenter-top-bottom)
 (global-set-key (kbd "C-x c") 'eval-last-sexp)
 (global-set-key (kbd "C-x y") 'comment-dwim)
 (global-set-key (kbd "C-x w") 'find-alternate-file)
+(global-set-key (kbd "C-x i") 'ibuffer)
 (define-key boon-keybinding-minor-mode-map (kbd "C-c C-r") 'helm-ag)
 
 ;; Buffer and window control
-(defun xah-new-empty-buffer ()
-  "Create a new empty buffer.
-     New buffer will be named “untitled” or “untitled<2>”,
-     “untitled<3>”, etc.
-
-     URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
-     Version 2016-12-27"
-  (interactive)
-  (let (($buf (generate-new-buffer "untitled")))
-    (switch-to-buffer $buf)
-    (funcall initial-major-mode)
-    (setq buffer-offer-save t)))
-
 (define-key boon-keybinding-minor-mode-map (kbd "C-c C-l") 'make-frame)
 (define-key boon-keybinding-minor-mode-map (kbd "C-c C-k") 'delete-frame)
 (global-set-key (kbd "C-x l") 'xah-new-empty-buffer)
@@ -62,22 +70,24 @@
 
 ;; Include extended indexer navigation for Boon
 (define-key boon-keybinding-minor-mode-map (kbd "C-c C-z") 'xref-peek-definitions)
-(define-key boon-keybinding-minor-mode-map (kbd "C-c C-f") 'ggtags-find-file)
+(define-key boon-keybinding-minor-mode-map (kbd "C-c C-f") 'projectile-find-file)
 (define-key boon-keybinding-minor-mode-map (kbd "C-c C-i") 'cscope-find-functions-calling-this-function)
 (define-key boon-keybinding-minor-mode-map (kbd "C-c C-o") 'cscope-find-called-functions)
 (define-key boon-keybinding-minor-mode-map (kbd "C-c C-p") 'cscope-find-this-symbol)
 
+(define-key boon-keybinding-minor-mode-map (kbd "C-M-0") 'insert-right-curly-brace)
+
+(define-key boon-command-map (kbd "z") 'raul-find-definitions)
+(define-key boon-command-map (kbd "Z") 'raul-find-references)
+(define-key boon-command-map (kbd "N") 'raul-pop-marker)
+
 ;; Start org-mode
 (define-key boon-keybinding-minor-mode-map (kbd "C-c C-w") 'org-capture)
 
-;; Load current file
-(defun load-current-file ()
-  "Execute file corresponding to current buffer"
-  (interactive)
-  (load-file (buffer-file-name)))
-
-(define-key boon-keybinding-minor-mode-map (kbd "C-c C-c") 'load-current-file)
-
+(define-key emacs-lisp-mode-map (kbd "C-c C-c") 'load-current-file)
+(add-hook 'c-mode-hook (lambda () (define-key c-mode-map (kbd "C-c C-c") 'compile)))
+(add-hook 'c++-mode-hook (lambda () (define-key c++-mode-map (kbd "C-c C-c") 'compile)))
+(add-hook 'python-mode-hook (lambda () (define-key python-mode-map (kbd "C-c C-c") 'raul-send-buffer-to-python)))
 
 (define-minor-mode boon-keybinding-minor-mode
   "A minor mode so that my key settings override annoying major modes."

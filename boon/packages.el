@@ -35,7 +35,8 @@
     (spaceline :location local)
     powerline
     boon-keybinding
-    (boon-keybinding :location local))
+    (boon-keybinding :location local)
+    visual-regexp)
   "The list of Lisp packages required by the boon layer.
 
 Each entry is either:
@@ -78,5 +79,8 @@ Each entry is either:
 (defun boon/init-boon-keybinding ()
   (require 'boon-keybinding)
   (boon-keybinding-minor-mode t))
+
+(defun boon/init-visual-regexp ()
+  (require 'visual-regexp))
 
 ;;; packages.el ends here
