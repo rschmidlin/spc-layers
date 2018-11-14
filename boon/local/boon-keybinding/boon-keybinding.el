@@ -10,6 +10,34 @@
 (add-hook 'helm-mode-hook (lambda () (define-key helm-map (kbd "M-i") 'helm-previous-line)))
 (add-hook 'helm-mode-hook (lambda () (define-key helm-map (kbd "M-o") 'helm-next-line)))
 
+;; Access spacemacs menu
+(define-key boon-command-map (kbd "m") 'spacemacs-cmds)
+(defun create-prefix-for-boon-command-map (prefix name &optional long-name)
+  (let* ((command name)
+         (full-prefix-boon (concat "m" " " prefix))
+         (full-prefix-boon-lst (listify-key-sequence
+                                (kbd full-prefix-boon))))
+    ;; define the prefix command only if it does not already exist
+    (unless long-name (setq long-name name))
+    (which-key-declare-prefixes
+      full-prefix-boon (cons name long-name))))
+
+(advice-add #'spacemacs/declare-prefix :around #'create-prefix-for-boon-command-map)
+
+(defmacro get-quoted-major-mode-map-prefix-symbol()
+  `(intern (concatenate 'string "spacemacs-" (symbol-name major-mode) "-map-prefix")))
+
+(defun get-major-mode-map-prefix ()
+  (and (boundp (get-quoted-major-mode-map-prefix-symbol)) (get-quoted-major-mode-map-prefix-symbol)))
+
+(defun set-major-mode-map-prefix()
+  (interactive)
+  (let ((current-major-mode (get-major-mode-map-prefix)))
+    (when current-major-mode
+      (define-key boon-command-map (kbd ",") current-major-mode))))
+
+(add-hook 'buffer-list-update-hook 'set-major-mode-map-prefix)
+ 
 ;; Use M-SPC to go back to command mode
 (define-key boon-keybinding-minor-mode-map (kbd "M-SPC") 'boon-set-command-state)
 
@@ -18,7 +46,7 @@
 (define-key isearch-mode-map (kbd "TAB") 'isearch-repeat-forward)
 
 ;; Also define commands for C-x that are available from x in Boon
-(global-set-key (kbd "C-x o") 'ace-window)
+;; (global-set-key (kbd "C-x o") 'ace-window)
 (define-key boon-keybinding-minor-mode-map (kbd "M-x") 'helm-M-x)
 (define-key boon-command-map (kbd "x x") 'helm-M-x)
 (global-set-key (kbd "C-x x") 'helm-M-x)
@@ -28,8 +56,8 @@
 ;; Define new commands for command mode
 (define-key boon-command-map (kbd ",") 'ace-window)
 (define-key boon-command-map (kbd "r") 'helm-swoop)
-(define-key boon-command-map (kbd "m") 'split-window-below)
-(define-key boon-command-map (kbd "M") 'split-window-right)
+;; (define-key boon-command-map (kbd "m") 'split-window-below)
+;; (define-key boon-command-map (kbd "M") 'split-window-right)
 (define-key boon-command-map (kbd ".") 'delete-other-windows)
 (define-key boon-command-map (kbd ":") 'delete-window)
 (define-key boon-command-map (kbd "T") 'query-replace)
