@@ -22,7 +22,7 @@
     (which-key-declare-prefixes
       full-prefix-boon (cons name long-name))))
 
-(advice-add #'spacemacs/declare-prefix :around #'create-prefix-for-boon-command-map)
+;; (advice-add #'spacemacs/declare-prefix :around #'create-prefix-for-boon-command-map)
 
 (defmacro get-quoted-major-mode-map-prefix-symbol()
   `(intern (concatenate 'string "spacemacs-" (symbol-name major-mode) "-map-prefix")))
@@ -34,7 +34,7 @@
   (interactive)
   (let ((current-major-mode (get-major-mode-map-prefix)))
     (when current-major-mode
-      (define-key boon-command-map (kbd ",") current-major-mode))))
+      (define-key boon-command-map (kbd ".") current-major-mode))))
 
 (add-hook 'buffer-list-update-hook 'set-major-mode-map-prefix)
  
@@ -58,8 +58,8 @@
 (define-key boon-command-map (kbd "r") 'helm-swoop)
 ;; (define-key boon-command-map (kbd "m") 'split-window-below)
 ;; (define-key boon-command-map (kbd "M") 'split-window-right)
-(define-key boon-command-map (kbd ".") 'delete-other-windows)
-(define-key boon-command-map (kbd ":") 'delete-window)
+;; (define-key boon-command-map (kbd ".") 'delete-other-windows)
+;; (define-key boon-command-map (kbd ":") 'delete-window)
 (define-key boon-command-map (kbd "T") 'query-replace)
 (define-key boon-command-map (kbd "_") 'undo-tree-redo)
 (define-key boon-command-map (kbd "M-_") 'undo-tree-visualize)
