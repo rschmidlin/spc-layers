@@ -307,6 +307,20 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (defun create-prefix-for-boon-command-map (old-function &rest arguments)
+    (let* ((prefix (car arguments))
+           (name (nth 1 arguments))
+           (long-name (nth 2 arguments))
+           (command name)
+           (full-prefix-boon (concat "m" " " prefix))
+           (full-prefix-boon-lst (listify-key-sequence
+                                  (kbd full-prefix-boon))))
+      ;; define the prefix command only if it does not already exist
+      (apply old-function arguments)
+      (unless long-name (setq long-name name))
+      (which-key-declare-prefixes
+        full-prefix-boon (cons name long-name))))
+  (advice-add #'spacemacs/declare-prefix :around #'create-prefix-for-boon-command-map)
   )
 
 (defun dotspacemacs/user-config ()

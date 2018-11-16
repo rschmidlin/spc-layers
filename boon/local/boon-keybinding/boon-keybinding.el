@@ -12,17 +12,6 @@
 
 ;; Access spacemacs menu
 (define-key boon-command-map (kbd "m") 'spacemacs-cmds)
-(defun create-prefix-for-boon-command-map (prefix name &optional long-name)
-  (let* ((command name)
-         (full-prefix-boon (concat "m" " " prefix))
-         (full-prefix-boon-lst (listify-key-sequence
-                                (kbd full-prefix-boon))))
-    ;; define the prefix command only if it does not already exist
-    (unless long-name (setq long-name name))
-    (which-key-declare-prefixes
-      full-prefix-boon (cons name long-name))))
-
-;; (advice-add #'spacemacs/declare-prefix :around #'create-prefix-for-boon-command-map)
 
 (defmacro get-quoted-major-mode-map-prefix-symbol()
   `(intern (concatenate 'string "spacemacs-" (symbol-name major-mode) "-map-prefix")))
