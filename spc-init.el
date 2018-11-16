@@ -321,6 +321,19 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (which-key-declare-prefixes
         full-prefix-boon (cons name long-name))))
   (advice-add #'spacemacs/declare-prefix :around #'create-prefix-for-boon-command-map)
+  
+  (defun create-prefix-for-boon-command-major-mode-map (old-function &rest arguments)
+    (let* ((mode (car arguments))
+           (prefix (nth 1 arguments))
+           (name (nth 2 arguments))
+           (long-name (nth 3 arguments))
+           (major-mode-prefix-boon
+            (concat "." " " (substring prefix 1))))
+      (apply old-function arguments)
+      (unless long-name (setq long-name name))
+      (let ((prefix-name (cons name long-name)))
+        (which-key-declare-prefixes-for-mode mode major-mode-prefix-boon prefix-name))))
+  (advice-add #'spacemacs/declare-prefix-for-mode :around #'create-prefix-for-boon-command-major-mode-map)
   )
 
 (defun dotspacemacs/user-config ()
