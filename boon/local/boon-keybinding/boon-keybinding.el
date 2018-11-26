@@ -1,5 +1,8 @@
 (defvar boon-keybinding-minor-mode-map  (make-sparse-keymap))
 
+;; Avoid x-esc-esc to lead to repeat command
+(global-set-key (kbd "C-x <escape> <escape>") nil)
+
 ;; Make line movement consistent in the minibuffer
 (global-set-key (kbd "M-i") 'previous-line)
 (global-set-key (kbd "M-o") 'next-line)
@@ -44,6 +47,7 @@
 
 ;; Define new commands for command mode
 (define-key boon-command-map (kbd ",") 'ace-window)
+(define-key boon-command-map (kbd ";") 'ace-delete-window)
 (define-key boon-command-map (kbd "r") 'helm-swoop)
 ;; (define-key boon-command-map (kbd "m") 'split-window-below)
 ;; (define-key boon-command-map (kbd "M") 'split-window-right)
