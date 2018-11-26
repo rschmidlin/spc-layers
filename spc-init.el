@@ -314,12 +314,15 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq spacemacs-boon-leader-key "ö")
+  (setq spacemacs-boon-major-mode-leader-key "ä")
+
   (defun create-prefix-for-boon-command-map (old-function &rest arguments)
     (let* ((prefix (car arguments))
            (name (nth 1 arguments))
            (long-name (nth 2 arguments))
            (command name)
-           (full-prefix-boon (concat "m" " " prefix))
+           (full-prefix-boon (concat spacemacs-boon-leader-key " " prefix))
            (full-prefix-boon-lst (listify-key-sequence
                                   (kbd full-prefix-boon))))
       ;; define the prefix command only if it does not already exist
@@ -335,7 +338,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
            (name (nth 2 arguments))
            (long-name (nth 3 arguments))
            (major-mode-prefix-boon
-            (concat "." " " (substring prefix 1))))
+            (concat spacemacs-boon-major-mode-leader-key " " (substring prefix 1))))
       (apply old-function arguments)
       (unless long-name (setq long-name name))
       (let ((prefix-name (cons name long-name)))

@@ -13,8 +13,14 @@
 (add-hook 'helm-mode-hook (lambda () (define-key helm-map (kbd "M-i") 'helm-previous-line)))
 (add-hook 'helm-mode-hook (lambda () (define-key helm-map (kbd "M-o") 'helm-next-line)))
 
+;; Elscreen usage
+(define-key boon-command-map (kbd "ü") 'elscreen-clone)
+(define-key boon-command-map (kbd "Ü") 'elscreen-goto)
+(define-key boon-command-map (kbd "+") 'elscreen-kill)
+(define-key boon-command-map (kbd "*") 'elscreen-kill-others)
+
 ;; Access spacemacs menu
-(define-key boon-command-map (kbd "m") 'spacemacs-cmds)
+(define-key boon-command-map (kbd spacemacs-boon-leader-key) 'spacemacs-cmds)
 
 (defmacro get-quoted-major-mode-map-prefix-symbol()
   `(intern (concatenate 'string "spacemacs-" (symbol-name major-mode) "-map-prefix")))
@@ -26,7 +32,7 @@
   (interactive)
   (let ((current-major-mode (get-major-mode-map-prefix)))
     (when current-major-mode
-      (define-key boon-command-map (kbd ".") current-major-mode))))
+      (define-key boon-command-map (kbd spacemacs-boon-major-mode-leader-key) current-major-mode))))
 
 (add-hook 'buffer-list-update-hook 'set-major-mode-map-prefix)
  
@@ -47,12 +53,11 @@
 
 ;; Define new commands for command mode
 (define-key boon-command-map (kbd ",") 'ace-window)
-(define-key boon-command-map (kbd ";") 'ace-delete-window)
 (define-key boon-command-map (kbd "r") 'helm-swoop)
-;; (define-key boon-command-map (kbd "m") 'split-window-below)
-;; (define-key boon-command-map (kbd "M") 'split-window-right)
-;; (define-key boon-command-map (kbd ".") 'delete-other-windows)
-;; (define-key boon-command-map (kbd ":") 'delete-window)
+(define-key boon-command-map (kbd "m") 'split-window-below)
+(define-key boon-command-map (kbd "M") 'split-window-right)
+(define-key boon-command-map (kbd ".") 'ace-delete-window)
+(define-key boon-command-map (kbd ":") 'delete-other-windows)
 (define-key boon-command-map (kbd "T") 'query-replace)
 (define-key boon-command-map (kbd "_") 'undo-tree-redo)
 (define-key boon-command-map (kbd "M-_") 'undo-tree-visualize)
