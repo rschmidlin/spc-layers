@@ -14,10 +14,10 @@
 (add-hook 'helm-mode-hook (lambda () (define-key helm-map (kbd "M-o") 'helm-next-line)))
 
 ;; Elscreen usage
-(define-key boon-command-map (kbd "ü") 'elscreen-clone)
-(define-key boon-command-map (kbd "Ü") 'elscreen-goto)
-(define-key boon-command-map (kbd "+") 'elscreen-kill)
-(define-key boon-command-map (kbd "*") 'elscreen-kill-others)
+(define-key boon-command-map (kbd "ü") 'elscreen-goto)
+(define-key boon-command-map (kbd "+") 'elscreen-clone)
+(define-key boon-command-map (kbd "*") 'elscreen-kill)
+(global-set-key (kbd "C-x +") 'elscreen-kill-others)
 
 ;; Access spacemacs menu
 (define-key boon-command-map (kbd spacemacs-boon-leader-key) 'spacemacs-cmds)
