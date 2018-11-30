@@ -41,7 +41,7 @@ values."
      win32
      indexer
      boon
-     helm
+     ivy
      auto-completion
      better-defaults
      emacs-lisp

@@ -6,12 +6,12 @@
 ;; Make line movement consistent in the minibuffer
 (global-set-key (kbd "M-i") 'previous-line)
 (global-set-key (kbd "M-o") 'next-line)
+(global-set-key (kbd "M-i") 'previous-line)
+(global-set-key (kbd "M-o") 'next-line)
 (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-i") 'dired-previous-line)))
 (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-o") 'dired-next-line)))
-(add-hook 'helm-mode-hook (lambda () (define-key helm-find-files-map (kbd "M-i") 'helm-previous-line)))
-(add-hook 'helm-mode-hook (lambda () (define-key helm-generic-files-map (kbd "M-i") 'helm-previous-line)))
-(add-hook 'helm-mode-hook (lambda () (define-key helm-map (kbd "M-i") 'helm-previous-line)))
-(add-hook 'helm-mode-hook (lambda () (define-key helm-map (kbd "M-o") 'helm-next-line)))
+(add-hook 'ivy-mode-hook (lambda () (define-key ivy-minibuffer-map (kbd "M-i") 'ivy-previous-line)))
+(add-hook 'ivy-mode-hook (lambda () (define-key ivy-minibuffer-map (kbd "M-o") 'ivy-next-line)))
 
 ;; Elscreen usage
 (define-key boon-command-map (kbd "ü") 'elscreen-goto)
@@ -44,16 +44,14 @@
 (define-key isearch-mode-map (kbd "TAB") 'isearch-repeat-forward)
 
 ;; Also define commands for C-x that are available from x in Boon
-;; (global-set-key (kbd "C-x o") 'ace-window)
-(define-key boon-keybinding-minor-mode-map (kbd "M-x") 'helm-M-x)
-(define-key boon-command-map (kbd "x x") 'helm-M-x)
-(global-set-key (kbd "C-x x") 'helm-M-x)
-(global-set-key (kbd "C-x b") 'helm-mini)
-(define-key boon-command-map (kbd "x b") 'helm-mini)
+(global-set-key (kbd "C-x o") 'ace-window)
+(define-key boon-keybinding-minor-mode-map  (kbd "M-x") 'counsel-M-x)
+(define-key boon-command-map (kbd "x x") 'counsel-M-x)
+(global-set-key (kbd "C-x x") 'counsel-M-x)
 
 ;; Define new commands for command mode
 (define-key boon-command-map (kbd ",") 'ace-window)
-(define-key boon-command-map (kbd "r") 'helm-swoop)
+(define-key boon-command-map (kbd "r") 'swiper)
 (define-key boon-command-map (kbd "m") 'split-window-below)
 (define-key boon-command-map (kbd "M") 'split-window-right)
 (define-key boon-command-map (kbd ".") 'ace-delete-window)
@@ -62,18 +60,18 @@
 (define-key boon-command-map (kbd "_") 'undo-tree-redo)
 (define-key boon-command-map (kbd "M-_") 'undo-tree-visualize)
 (define-key boon-command-map (kbd "M-f") 'browse-kill-ring)
-(define-key boon-goto-map (kbd "i") 'helm-imenu)
+(define-key boon-goto-map (kbd "i") 'counsel-imenu)
 
 ;; New keys on C-x or C-c groups avoiding necessity of pressing control
 (global-set-key (kbd "C-x t") 'vr/query-replace)
 (global-set-key (kbd "C-x ö") 'save-buffer)
-(global-set-key (kbd "C-x j") 'helm-find-files)
+(global-set-key (kbd "C-x j") 'find-file)
 (global-set-key (kbd "C-x p") 'recenter-top-bottom)
 (global-set-key (kbd "C-x c") 'eval-last-sexp)
 (global-set-key (kbd "C-x y") 'comment-dwim)
 (global-set-key (kbd "C-x w") 'find-alternate-file)
 (global-set-key (kbd "C-x i") 'ibuffer)
-(define-key boon-keybinding-minor-mode-map (kbd "C-c C-r") 'helm-ag)
+(define-key boon-keybinding-minor-mode-map (kbd "C-c C-r") 'grep-find)
 
 ;; Buffer and window control
 (define-key boon-keybinding-minor-mode-map (kbd "C-c C-l") 'make-frame)
